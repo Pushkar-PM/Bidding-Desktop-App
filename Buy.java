@@ -9,10 +9,9 @@ import java.awt.image.ImageObserver;
 import java.io.InputStream;
 import java.lang.management.ClassLoadingMXBean;
 import java.sql.*;
-import java.util.Calendar;
+import java.util.*;
 import java.util.Date;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.function.BiPredicate;
 
 public class Buy extends JPanel{
@@ -54,12 +53,20 @@ public class Buy extends JPanel{
         buttonp.setForeground(Color.yellow);
         buttonh.setBackground(Color.BLACK);
         buttonh.setForeground(Color.yellow);
-        String url="jdbc:sqlserver://LAPTOP-3BUR9OUC\\MSSQLSERVER01;databaseName=master";
-        String user="Pushkar";
-        String password="Pushkar@123";
+        String url="";
+        String user="";
+        String password="";
         back=new JButton("Back");
         back.setBackground(Color.BLACK);
         back.setForeground(Color.yellow);
+        ResourceBundle reader = null;
+        try{
+            reader = ResourceBundle.getBundle("dbconfig.properties");
+            url=reader.getString("db.url");
+            user=reader.getString("db.username");
+            password=reader.getString("db.password");
+        }catch(Exception e){
+        }
         try {
             connection = DriverManager.getConnection(url, user, password);
             System.out.println("Cooo");
@@ -333,98 +340,11 @@ public class Buy extends JPanel{
                     });
             }
         });
-//        buttonv.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                try {
-//                    prod_dis.getter(bufferedImage, resultSet.getInt("P_id"),login1);
-//                    frame.dispose();
-//                    credit.prod_dis.main(new String[0]);
-//                }catch (Exception exception){
-//                    exception.printStackTrace();
-//                }
-//            }
-//        });
-//        try {
-//            String j = "select *from Product where Pname=?";
-//            PreparedStatement preparedStatement = connection.prepareStatement(j);
-//            preparedStatement.setString(1,search);
-//            resultSet = preparedStatement.executeQuery();
-//
-//        }catch(SQLException sqlException){
-//            sqlException.printStackTrace();
-////        }
-//        JLabel labeli=new JLabel();
-//        JPanel panel7=new JPanel();
-//        try {
-//            resultSet.next();
-//            System.out.println("k");
-//            InputStream inputStream = resultSet.getBinaryStream("image");
-//            BufferedImage bufferedImage = ImageIO.read(inputStream);
-//            BufferedImage resized = new BufferedImage(300, 300, bufferedImage.getType());
-//            Graphics2D gr = resized.createGraphics();
-//            gr.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-//                    RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-//            gr.drawImage(bufferedImage, 0, 0, 300, 300, 0, 0, bufferedImage.getWidth(),
-//                    bufferedImage.getHeight(), null);
-//            labeli.setIcon(new ImageIcon(resized));
-//            panel7.add(labeli);
-////            label50.setText("kkkkkk");
-//            label1A.setText(String.valueOf(resultSet.getInt("P_id")));
-//            label2A.setText(resultSet.getString("Pname"));
-//            label3A.setText(String.valueOf(resultSet.getInt("price")));
-//            label4A.setText(String.valueOf(resultSet.getInt("Min_bid")));
-//            font(label1A);
-//            font(label2A);
-//            font(label3A);
-//            font(label4A);
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//
-//        button.addActionListener(new ActionListener(){
-//                    @Override
-//                    public void actionPerformed(ActionEvent actionEvent) {
-//                        try {
-////                            String j = "select image from Product where Seller_id='lion'";
-////                            PreparedStatement preparedStatement = connection.prepareStatement(j);
-////                            ResultSet resultSet = preparedStatement.executeQuery();
-//                                resultSet.next();
-//                                System.out.println("k");
-//                                InputStream inputStream = resultSet.getBinaryStream("image");
-//                                BufferedImage bufferedImage = ImageIO.read(inputStream);
-//                                BufferedImage resized = new BufferedImage(300, 300, bufferedImage.getType());
-//                                Graphics2D gr = resized.createGraphics();
-//                                gr.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-//                                        RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-//                                gr.drawImage(bufferedImage, 0, 0, 300, 300, 0, 0, bufferedImage.getWidth(),
-//                                        bufferedImage.getHeight(), null);
-////                        gr.dispose();
-//                            labeli.setIcon(new ImageIcon(resized));
-//                            panel7.add(labeli);
-//                            label1A.setText(String.valueOf(resultSet.getInt("P_id")));
-//                            label2A.setText(resultSet.getString("Pname"));
-//                            label3A.setText(String.valueOf(resultSet.getInt("price")));
-//                            label4A.setText(String.valueOf(resultSet.getInt("Min_bid")));
-//                            font(label1A);
-//                            font(label2A);
-//                            font(label3A);
-//                            font(label4A);
-////                            Image image = new ImageIcon(resized).getImage();
-////                                g.drawImage(image, 0, 0, this);
-////                       label17.setIcon(new ImageIcon(bufferedImage));
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-
         panel7.setPreferredSize(new Dimension(300,300));
         panel7.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.WHITE,1,true),BorderFactory.createLineBorder(Color.WHITE,1,true)));
         panel6.add(panel7);
         JPanel panel91=new JPanel();
         panel91.setPreferredSize(new Dimension(20,10));
-//        panel91.setOpaque(false);
         panel8.setBackground(new Color(0,0,0,120));
         panel91.setBackground(new Color(0,0,0,120));
         panel6.add(panel91);
@@ -457,7 +377,6 @@ public class Buy extends JPanel{
         panel8.setBackground(Color.BLACK);
         JPanel panel9=new JPanel();
         JLabel label5=new JLabel();
-//        label5.setIcon(new ImageIcon("C:/Users/pushk/Desktop/s.jpg"));
         panel9.setPreferredSize(new Dimension(20,40));
         panel9.add(label5);
         panel7.setOpaque(false);

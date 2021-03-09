@@ -1,15 +1,12 @@
 package credit;
 
-//import jdk.swing.interop.SwingInterOpUtils;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.net.Socket;
 import java.sql.*;
 import java.time.Year;
+import java.util.ResourceBundle;
 import javax.swing.*;
-
-import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 public class GridBag1 extends JPanel{
     JFrame frame;
@@ -29,9 +26,17 @@ public class GridBag1 extends JPanel{
         gridBag1.go();
     }
     public void go(){
-        String url="jdbc:sqlserver://LAPTOP-3BUR9OUC\\MSSQLSERVER01;databaseName=master";
-        String user="Pushkar";
-        String password="Pushkar@123";
+        String url="";
+        String user="";
+        String password="";
+        ResourceBundle reader = null;
+        try{
+            reader = ResourceBundle.getBundle("dbconfig.properties");
+            url=reader.getString("db.url");
+            user=reader.getString("db.username");
+            password=reader.getString("db.password");
+        }catch(Exception e){
+        }
         try {
             connection = DriverManager.getConnection(url, user, password);
             System.out.println("Cooo1");

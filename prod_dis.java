@@ -7,10 +7,9 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.security.spec.ECField;
 import java.sql.*;
-import java.util.Calendar;
+import java.util.*;
 import java.util.Date;
 import java.util.Timer;
-import java.util.TimerTask;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 public class prod_dis implements ActionListener
@@ -23,9 +22,9 @@ public class prod_dis implements ActionListener
     JButton logo;
     static BufferedImage bufferedImage;
     BufferedImage resized;
-    String url="jdbc:sqlserver://LAPTOP-3BUR9OUC\\MSSQLSERVER01;databaseName=master";
-    String user="Pushkar";
-    String password="Pushkar@123";
+    String url="";
+    String user="";
+    String password="";
     Connection connection;
     Calendar calendar;
     JLabel label5A;
@@ -44,6 +43,15 @@ public class prod_dis implements ActionListener
     }
     public void go()
     {
+        ResourceBundle reader = null;
+        try{
+            reader = ResourceBundle.getBundle("dbconfig.properties");
+            url=reader.getString("db.url");
+            user=reader.getString("db.username");
+            password=reader.getString("db.password");
+        }catch(Exception e){
+        }
+
         try {
             connection = DriverManager.getConnection(url, user, password);
             System.out.println("connected");

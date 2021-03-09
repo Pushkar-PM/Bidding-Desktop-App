@@ -1,9 +1,5 @@
 package credit;
 
-import com.sun.security.auth.module.JndiLoginModule;
-import credit.GridBag1;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -82,13 +78,19 @@ public class Sell extends JPanel implements ActionListener {
                 credit.prod_dis3.main(new String[0]);
             }
         });
-        System.out.println(login1);
-        String url="jdbc:sqlserver://LAPTOP-3BUR9OUC\\MSSQLSERVER01;databaseName=master";
-        String user="Pushkar";
-        String password="Pushkar@123";
+        String url="";
+        String user="";
+        String password="";
+        ResourceBundle reader = null;
+        try{
+            reader = ResourceBundle.getBundle("dbconfig.properties");
+            url=reader.getString("db.url");
+            user=reader.getString("db.username");
+            password=reader.getString("db.password");
+        }catch(Exception e){
+        }
         try {
             connection = DriverManager.getConnection(url, user, password);
-            System.out.println("Cooo");
         }catch (SQLException sqlException){
             sqlException.printStackTrace();
         }
@@ -107,7 +109,6 @@ public class Sell extends JPanel implements ActionListener {
         panel2.setOpaque(false);
         panel3.setOpaque(false);
         panel4.setOpaque(false);
-//        panel4.setBackground(new Color(0,0,0,120));
         panel.setLayout(new GridBagLayout());
         JLabel label=new JLabel("SELL IT OUT!!!!");
         label.setForeground(Color.WHITE);

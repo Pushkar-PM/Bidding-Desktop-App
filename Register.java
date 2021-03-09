@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.sql.*;
+import java.util.ResourceBundle;
 
 public class Register extends JPanel implements ActionListener{
     JPasswordField textField5;
@@ -30,9 +31,9 @@ public class Register extends JPanel implements ActionListener{
     Socket socket;
     BufferedReader bufferedReader;
     PrintWriter printWriter;
-    String url="jdbc:sqlserver://LAPTOP-3BUR9OUC\\MSSQLSERVER01;databaseName=master";
-    String user="Pushkar";
-    String password="Pushkar@123";
+    String url="";
+    String user="";
+    String password="";
     Connection connection;
     String ha;
     JTextField arr[];
@@ -55,6 +56,14 @@ public class Register extends JPanel implements ActionListener{
         Register register=new Register();
 //        register.setLayout(new BoxLayout(register,BoxLayout.Y_AXIS));
         GridBagConstraints gridBagConstraints=new GridBagConstraints();
+        ResourceBundle reader = null;
+        try{
+            reader = ResourceBundle.getBundle("dbconfig.properties");
+            url=reader.getString("db.url");
+            user=reader.getString("db.username");
+            password=reader.getString("db.password");
+        }catch(Exception e){
+        }
         try {
             connection = DriverManager.getConnection(url, user, password);
             System.out.println("connected");

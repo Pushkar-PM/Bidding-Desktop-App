@@ -9,11 +9,9 @@ import java.sql.*;
 import java.awt.Color;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.*;
 import java.util.Date;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -38,9 +36,9 @@ public class prod_dis3 implements ActionListener
     String arrayList1[]=new String[3];
     JFrame frame=new JFrame();
     //    private static final String jdbcdrive="com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static final String jdbcurl="jdbc:sqlserver://LAPTOP-3BUR9OUC\\MSSQLSERVER01;databaseName=master";
-    private static final String username="Pushkar";
-    private static final String password="Pushkar@123";
+    private static String url="";
+    private static String user="";
+    private static String password="";
     public static void main(String[] args)
     {
         prod_dis3 prod=new prod_dis3();
@@ -54,6 +52,15 @@ public class prod_dis3 implements ActionListener
         f=new JFrame("Profile");
         JPanel panel1=new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buy=new JButton("Buy");
+        ResourceBundle reader = null;
+        try{
+            reader = ResourceBundle.getBundle("dbconfig.properties");
+            url=reader.getString("db.url");
+            user=reader.getString("db.username");
+            password=reader.getString("db.password");
+        }catch(Exception e){
+        }
+
         buy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -128,7 +135,7 @@ public class prod_dis3 implements ActionListener
             databaseConnection=null;
             try
             {
-                databaseConnection=DriverManager.getConnection(jdbcurl,username,password);
+                databaseConnection=DriverManager.getConnection(url,user,password);
                 System.out.print("Connected database");
                 String j="select* from Customer where C_id=?";
                 PreparedStatement preparedStatement=databaseConnection.prepareStatement(j);
